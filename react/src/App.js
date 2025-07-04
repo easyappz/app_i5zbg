@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import ErrorBoundary from './ErrorBoundary';
+import GameBall from './components/GameBall';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
             Шаблон React успешно развернут, <br />
             Ждите обновлений от AI :)
           </p>
+          <GameBall />
         </header>
       </div>
     </ErrorBoundary>

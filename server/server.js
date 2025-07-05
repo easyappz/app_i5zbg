@@ -17,21 +17,26 @@ app.use('/api', apiRoutes);
 /**
  * Подключение к базе данных MongoDB
  */
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/defaultdb';
 
-const mongoDb = mongoose.createConnection(MONGO_URI);
+// Используем mongoose.connect вместо createConnection для единого подключения
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('MongoDB connected successfully');
+})
+.catch((err) => {
+  console.error('MongoDB connection error:', err);
+  process.exit(1); // Завершаем процесс при ошибке подключения
+});
 
-mongoDb
-  .asPromise()
-  .then(() => {
-    console.log('MongoDB connected');
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err);
-  });
+// Экспортируем подключение для использования в других модулях
+const db = mongoose.connection;
 
 // Глобальная переменная для доступа к базе данных из других модулей
-global.mongoDb = mongoDb;
+global.mongoDb = db;
 
 // Порт для запуска сервера
 const PORT = process.env.PORT || 3000;

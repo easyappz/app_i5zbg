@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-// Для работы с базой данных
-const mongoDb = global.mongoDb;
-
 const router = express.Router();
 
 // Определение схемы для позиции шарика
@@ -21,8 +18,8 @@ const PlayerScoreSchema = new mongoose.Schema({
 });
 
 // Модели для работы с данными
-const BallPosition = mongoDb.model('BallPosition', BallPositionSchema);
-const PlayerScore = mongoDb.model('PlayerScore', PlayerScoreSchema);
+const BallPosition = mongoose.model('BallPosition', BallPositionSchema);
+const PlayerScore = mongoose.model('PlayerScore', PlayerScoreSchema);
 
 // GET /api/hello
 router.get('/hello', (req, res) => {
